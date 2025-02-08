@@ -1,5 +1,5 @@
 //
-//  RatingExtension.swift
+//  ProductModelExtension.swift
 //  Akakce Case Study IOS
 //
 //  Created by Mert Saygılı on 8.02.2025.
@@ -8,7 +8,9 @@
 import UIKit
 import Kingfisher
 
-extension ProductModel {
+typealias ProductModelExtension = ProductModel
+
+extension ProductModelExtension {
     var getProductRatingLabel: String {
         if let rating = self.rating?.rate {
             return String(format: "%.1f/5.0", rating)
