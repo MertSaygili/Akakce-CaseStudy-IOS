@@ -14,6 +14,7 @@ final class GridProductCollectionViewCell: UICollectionViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
+        imageView.backgroundColor = .clear
         return imageView
     }()
 
@@ -21,8 +22,16 @@ final class GridProductCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        label.textAlignment = .center
+        label.textAlignment = .left
         label.numberOfLines = 2
+        return label
+    }()
+
+    private let productPriceLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+        label.textColor = .systemBlue
         return label
     }()
 
@@ -32,16 +41,19 @@ final class GridProductCollectionViewCell: UICollectionViewCell {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
     }
 
     private func setupUI() {
-        backgroundColor = .systemGray5
-        layer.cornerRadius = 8
-        clipsToBounds = true
+        backgroundColor = .clear
+        layer.cornerRadius = 12
+        layer.borderWidth = 1
+        layer.borderColor = UIColor.systemGray5.cgColor
 
         addSubview(productImageView)
         addSubview(productNameLabel)
+
+        addSubview(productPriceLabel)
 
         NSLayoutConstraint.activate([
             productImageView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
@@ -52,16 +64,18 @@ final class GridProductCollectionViewCell: UICollectionViewCell {
             productNameLabel.topAnchor.constraint(equalTo: productImageView.bottomAnchor, constant: 8),
             productNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
             productNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
-            productNameLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8)
+
+            productPriceLabel.topAnchor.constraint(equalTo: productNameLabel.bottomAnchor, constant: 0),
+            productPriceLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
+            productPriceLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
+            productPriceLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16)
+
             ])
     }
 
     func configure(with product: ProductModel) {
-        if let imageUrl = product.image, let url = URL(string: imageUrl) {
-            productImageView.kf.setImage(with: url)
-        } else {
-            productImageView.image = UIImage(named: "")
-        }
+        product.loadProductImage(into: productImageView)
         productNameLabel.text = product.title
+        productPriceLabel.text = product.getProductPriceLabel
     }
 }

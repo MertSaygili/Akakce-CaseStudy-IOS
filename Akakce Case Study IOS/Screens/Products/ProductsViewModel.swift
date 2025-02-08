@@ -1,14 +1,28 @@
+//
+//  ProductsViewModelProtocol.swift
+//  Akakce Case Study IOS
+//
+//  Created by Mert Saygılı on 8.02.2025.
+//
+
 import Foundation
+import UIKit
 
 protocol ProductsViewModelProtocol {
     var horizontalProducts: [ProductModel] { get }
     var verticalProducts: [ProductModel] { get }
     var errorMessage: String? { get set }
     var reloadData: (() -> Void)? { get set }
+    var navigationProtocol: ProductsNavigationProtocol? { get set }
+
 
     func fetchHorizontalProducts()
     func fetchVerticalProducts()
+    func didSelectVerticalProduct(id: Int)
+    func didSelectHorizontalProduct(id: Int)
+    func refresh()
 }
+
 
 class ProductsViewModel: ProductsViewModelProtocol {
     private let productService: ProductServiceProtocol
@@ -16,6 +30,8 @@ class ProductsViewModel: ProductsViewModelProtocol {
     var verticalProducts: [ProductModel] = []
     var errorMessage: String?
     var reloadData: (() -> Void)?
+    weak var navigationProtocol: ProductsNavigationProtocol?
+
 
     init(productService: ProductServiceProtocol) {
         self.productService = productService
@@ -49,5 +65,33 @@ class ProductsViewModel: ProductsViewModelProtocol {
                 self?.errorMessage = error.message
             }
         }
+    }
+
+    func refresh() {
+        self.verticalProducts = []
+        self.horizontalProducts = []
+        fetchHorizontalProducts()
+        fetchVerticalProducts()
+    }
+
+    func didSelectVerticalProduct(id: Int) {
+        guard verticalProducts.first(where: { $0.id == id }) != nil else { return }
+
+        pushToProductDetailPage(productId: id)
+    }
+
+    func didSelectHorizontalProduct(id: Int) {
+        guard verticalProducts.first(where: { $0.id == id }) != nil else { return }
+
+        pushToProductDetailPage(productId: id)
+    }
+
+
+    private func pushToProductDetailPage(productId: Int) {
+        let productDetailViewModel = ProductDetailViewModel(productId: productId, productService: productService)
+        let productDetailViewController = ProductDetailViewController(viewModel: productDetailViewModel)
+
+        // Push to navigation stack
+        navigationProtocol?.navigateToProductDetail(with: productDetailViewController)
     }
 }

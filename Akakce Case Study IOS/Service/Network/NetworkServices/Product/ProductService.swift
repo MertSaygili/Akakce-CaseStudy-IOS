@@ -7,7 +7,7 @@
 
 protocol ProductServiceProtocol {
     func getProducts(limit: Int, comletion: @escaping (Result<[ProductModel], NetworkError>) -> Void)
-    func getProductDetail(id: Int, comletion: @escaping (Result<ProductModel, NetworkError>) -> Void) -> ProductModel
+    func getProductDetail(id: Int, comletion: @escaping (Result<ProductModel, NetworkError>) -> Void)
 }
 
 
@@ -21,16 +21,12 @@ class ProductService: ProductServiceProtocol {
         }
     }
 
-    func getProductDetail(id: Int, comletion: @escaping (Result<ProductModel, NetworkError>) -> Void) -> ProductModel {
-        // Implementation for product detail - not needed for this task
-        return ProductModel(
-            id: 0,
-            title: "",
-            price: 0,
-            description: "",
-            category: "",
-            image: "",
-            rating: nil
-        )
+    func getProductDetail(id: Int, comletion: @escaping (Result<ProductModel, NetworkError>) -> Void) {
+        do {
+            let request = try ProductServiceRoutes.product(id: id).makeRequest()
+            NetworkManager.shared.request(request: request, completion: comletion)
+        } catch {
+            comletion(.failure(.invalidUrl))
+        }
     }
 }

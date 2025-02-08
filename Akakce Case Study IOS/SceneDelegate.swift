@@ -15,14 +15,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         _ scene: UIScene, willConnectTo session: UISceneSession,
         options connectionOptions: UIScene.ConnectionOptions
     ) {
-        guard (scene as? UIWindowScene) != nil else { return }
+        guard let windowScene = scene as? UIWindowScene else { return }
 
         let productService = ProductService()
         let productViewModel = ProductsViewModel(productService: productService)
         let productViewController = ProductsViewController(viewModel: productViewModel)
 
-        window = UIWindow(windowScene: scene as! UIWindowScene)
-        window?.rootViewController = productViewController
+        // Wrap in UINavigationController
+        let navigationController = UINavigationController(rootViewController: productViewController)
+
+        window = UIWindow(windowScene: windowScene)
+        window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
     }
 

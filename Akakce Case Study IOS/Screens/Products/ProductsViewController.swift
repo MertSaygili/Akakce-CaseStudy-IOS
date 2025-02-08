@@ -1,22 +1,33 @@
+//
+//  ProductsViewControllerProtocol.swift
+//  Akakce Case Study IOS
+//
+//  Created by Mert Saygılı on 8.02.2025.
+//
+
 import UIKit
 
 protocol ProductsViewControllerProtocol: AnyObject {
     func getVerticalProducts() -> [ProductModel]
     func getHorizontalProducts() -> [ProductModel]
-    func didSelectVerticalProduct(at index: Int)
-    func didSelectHorizontalProduct(at index: Int)
-
+    func didSelectVerticalProduct(id: Int?)
+    func didSelectHorizontalProduct(id: Int?)
+    func refresh()
 }
 
-class ProductsViewController: UIViewController, ProductsViewControllerProtocol {
+class ProductsViewController: UIViewController, ProductsViewControllerProtocol, ProductsNavigationProtocol {
 
+    // MARK: Properties
     private var viewModel: ProductsViewModelProtocol
     private lazy var productsView = ProductsView()
+    private let screenTitle: String = "Products"
 
     // MARK: Initialization
     init(viewModel: ProductsViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+
+        self.viewModel.navigationProtocol = self
     }
 
     required init?(coder: NSCoder) {
@@ -36,6 +47,11 @@ class ProductsViewController: UIViewController, ProductsViewControllerProtocol {
         fetchProducts()
     }
 
+    // MARK: ProductsNavigationProtocol
+    func navigateToProductDetail(with viewController: UIViewController) {
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+
     // MARK: ProductsViewControllerProtocol
     func getVerticalProducts() -> [ProductModel] {
         return viewModel.verticalProducts
@@ -45,17 +61,27 @@ class ProductsViewController: UIViewController, ProductsViewControllerProtocol {
         return viewModel.horizontalProducts
     }
 
-    func didSelectVerticalProduct(at index: Int) {
-        print("Vertical product selected at index: \(index)")
+    func didSelectVerticalProduct(id: Int?) {
+        if(id == nil) {
+            return
+        }
+        viewModel.didSelectVerticalProduct(id: id!)
     }
 
-    func didSelectHorizontalProduct(at index: Int) {
-        print("Horizontal product selected at index: \(index)")
+    func didSelectHorizontalProduct(id: Int?) {
+        if(id == nil) {
+            return
+        }
+        viewModel.didSelectHorizontalProduct(id: id!)
+    }
+
+    func refresh() {
+        viewModel.refresh()
     }
 
     // MARK: Setup
     private func setupView() {
-        title = "Products"
+        title = screenTitle
         productsView.delegate = self
     }
 
