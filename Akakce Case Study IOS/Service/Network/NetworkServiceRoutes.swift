@@ -15,9 +15,9 @@ extension URLRequestConvertible {
     func makeServiceRequest(path: String) throws -> URLComponents {
         var urlComponent: URLComponents? = URLComponents()
 
-        urlComponent?.scheme = "https"
-        urlComponent?.host = ""
-        urlComponent?.path = ""
+        urlComponent?.scheme = NetworkConstants.shared.baseUrlScheme
+        urlComponent?.host = NetworkConstants.shared.baseUrl
+        urlComponent?.path = "/" + path
 
         if urlComponent == nil {
             throw NetworkError.invalidUrl
@@ -26,4 +26,3 @@ extension URLRequestConvertible {
         return urlComponent!
     }
 }
-

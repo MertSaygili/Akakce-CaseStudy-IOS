@@ -11,9 +11,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
+    func scene(
+        _ scene: UIScene, willConnectTo session: UISceneSession,
+        options connectionOptions: UIScene.ConnectionOptions
+    ) {
+        guard (scene as? UIWindowScene) != nil else { return }
 
-    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        guard let _ = (scene as? UIWindowScene) else { return }
+        let productService = ProductService()
+        let productViewModel = ProductsViewModel(productService: productService)
+        let productViewController = ProductsViewController(viewModel: productViewModel)
+
+        window = UIWindow(windowScene: scene as! UIWindowScene)
+        window?.rootViewController = productViewController
+        window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -44,6 +54,4 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
 
-
 }
-

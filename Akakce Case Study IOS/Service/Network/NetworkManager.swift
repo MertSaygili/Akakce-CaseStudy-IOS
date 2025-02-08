@@ -12,7 +12,7 @@ class NetworkManager {
     // singleton instance
     static let shared: NetworkManager = NetworkManager()
 
-    private init() {}
+    private init() { }
 
     func request<T: Codable>(
         request: URLRequest, completion: @escaping (Result<T, NetworkError>) -> Void
