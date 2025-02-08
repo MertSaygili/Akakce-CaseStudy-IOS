@@ -68,30 +68,25 @@ class ProductsViewModel: ProductsViewModelProtocol {
     }
 
     func refresh() {
-        self.verticalProducts = []
-        self.horizontalProducts = []
         fetchHorizontalProducts()
         fetchVerticalProducts()
     }
 
     func didSelectVerticalProduct(id: Int) {
         guard verticalProducts.first(where: { $0.id == id }) != nil else { return }
-
         pushToProductDetailPage(productId: id)
     }
 
     func didSelectHorizontalProduct(id: Int) {
-        guard verticalProducts.first(where: { $0.id == id }) != nil else { return }
-
+        guard horizontalProducts.first(where: { $0.id == id }) != nil else { return }
         pushToProductDetailPage(productId: id)
     }
-
 
     private func pushToProductDetailPage(productId: Int) {
         let productDetailViewModel = ProductDetailViewModel(productId: productId, productService: productService)
         let productDetailViewController = ProductDetailViewController(viewModel: productDetailViewModel)
 
-        // Push to navigation stack
+        // Push to product detail page
         navigationProtocol?.navigateToProductDetail(with: productDetailViewController)
     }
 }

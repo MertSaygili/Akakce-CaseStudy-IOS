@@ -21,7 +21,7 @@ extension ProductModelExtension {
 
     var getProductPriceLabel: String {
         if let price = self.price {
-            return String(format: "%.2f TL", price)
+            return String(format: "%.2f $", price)
         } else {
             return "No price"
         }
