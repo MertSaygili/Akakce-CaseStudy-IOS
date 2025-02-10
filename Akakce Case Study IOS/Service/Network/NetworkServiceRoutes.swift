@@ -7,10 +7,12 @@
 
 import Foundation
 
+// This enum is used to define the network methods.
 protocol URLRequestConvertible {
     func makeRequest() throws -> URLRequest
 }
 
+// This protocol is used to define the network routes.
 extension URLRequestConvertible {
     func makeServiceRequest(path: String) throws -> URLComponents {
         var urlComponent: URLComponents? = URLComponents()

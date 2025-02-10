@@ -143,7 +143,7 @@ final class ProductsView: UIView {
     }
 }
 
-// MARK: - ProductsViewProtocol
+// MARK: - UI Setup, Data Handling
 extension ProductsView {
     func setupUI() {
         backgroundColor = .systemBackground

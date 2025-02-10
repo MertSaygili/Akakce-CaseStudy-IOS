@@ -7,6 +7,7 @@
 
 import UIKit
 
+// This protocol for the navigation between the products to product detail.
 protocol ProductsNavigationProtocol: AnyObject {
     func navigateToProductDetail(with viewController: UIViewController)
 }

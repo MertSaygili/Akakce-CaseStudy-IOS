@@ -11,6 +11,8 @@ typealias ViewControllerIdentifier = UIViewController
 typealias TableViewCellIdentifier = UITableViewCell
 typealias CollectionViewCellIdentifier = UICollectionViewCell
 
+// This extension is used to get the identifier of the view controller, or table view cell, or collection view cell.
+//  Better use than defining the identifier top of the class.
 extension ViewControllerIdentifier {
     static var identifier: String {
         return String(describing: self)

@@ -13,6 +13,7 @@ enum ProductServiceRoutes {
 }
 
 extension ProductServiceRoutes: URLRequestConvertible {
+    // returns the request for the service
     func makeRequest() throws -> URLRequest {
         var baseRequest: URLComponents = try makeServiceRequest(path: path)
         let queryItems: [URLQueryItem]? = queryItems ?? []
@@ -32,6 +33,7 @@ extension ProductServiceRoutes: URLRequestConvertible {
         return request
     }
 
+    // returns the path for the service
     private var path: String {
         switch self {
         case .products:
@@ -41,6 +43,7 @@ extension ProductServiceRoutes: URLRequestConvertible {
         }
     }
 
+    // returns the method for the service
     private var method: String {
         switch self {
         case .products, .product:
@@ -48,6 +51,7 @@ extension ProductServiceRoutes: URLRequestConvertible {
         }
     }
 
+    // returns the query items for the service
     private var queryItems: [URLQueryItem]? {
         switch self {
         case .products(let limit):

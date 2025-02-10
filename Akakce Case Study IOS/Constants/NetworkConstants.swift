@@ -5,6 +5,8 @@
 //  Created by Mert Saygılı on 8.02.2025.
 //
 
+// This class is used to keep the network constants.
+// Private, Singleton, Immutable class
 final class NetworkConstants {
     private init() { }
 

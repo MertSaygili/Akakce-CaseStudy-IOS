@@ -12,6 +12,7 @@ protocol ProductServiceProtocol {
 
 
 class ProductService: ProductServiceProtocol {
+    // Returns the products with the given
     func getProducts(limit: Int = 20, comletion: @escaping (Result<[ProductModel], NetworkError>) -> Void) {
         do {
             let request = try ProductServiceRoutes.products(limit: limit).makeRequest()
@@ -21,6 +22,7 @@ class ProductService: ProductServiceProtocol {
         }
     }
 
+    // Returns the product detail with the given id
     func getProductDetail(id: Int, comletion: @escaping (Result<ProductModel, NetworkError>) -> Void) {
         do {
             let request = try ProductServiceRoutes.product(id: id).makeRequest()

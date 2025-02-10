@@ -9,6 +9,7 @@ import UIKit
 
 typealias IconsExtension = UIImage
 
+// The icons used in the application are defined in this extension.
 extension IconsExtension {
     var fillStarImage: UIImage {
         return UIImage(systemName: "star.fill") ?? UIImage()

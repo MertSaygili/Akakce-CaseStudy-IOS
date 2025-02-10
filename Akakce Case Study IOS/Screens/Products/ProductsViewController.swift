@@ -7,6 +7,7 @@
 
 import UIKit
 
+// This protocol is used to communicate between the products view and the view controller.
 protocol ProductsViewControllerProtocol: AnyObject {
     func getVerticalProducts() -> [ProductModel]
     func getHorizontalProducts() -> [ProductModel]

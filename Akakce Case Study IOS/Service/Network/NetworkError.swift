@@ -7,6 +7,9 @@
 
 import Foundation
 
+// Network Error Handling, This enum is used in the NetworkManager class.
+// This class should be improved, the error messages should be more detailed. And make it localized.
+// Might be the next case is sending Toast or Alert to the user. After getting the error.
 enum NetworkError: Error {
     case invalidUrl
     case requestFailed(statusCode: Int)

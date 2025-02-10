@@ -10,6 +10,8 @@ import Kingfisher
 
 typealias ProductModelExtension = ProductModel
 
+// Product Model extension, is for managing the datas of the product model.
+// For handling the null values, and setting the default values.
 extension ProductModelExtension {
     var getProductRatingLabel: String {
         if let rating = self.rating?.rate {
@@ -44,6 +46,6 @@ extension ProductModelExtension {
     }
 
     private var productImage: UIImage {
-        return UIImage(named: "placeholder") ?? UIImage()
+        return UIImage(named: "") ?? UIImage()
     }
 }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-
+// This protocol is used to get the product detail. and makes communication with the product detail view.
 protocol ProductDetailsViewControllerProtocol: AnyObject {
     func getProductDetail() -> ProductModel?
 }

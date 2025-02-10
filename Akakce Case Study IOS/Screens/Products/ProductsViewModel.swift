@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 
+// This protocol is for the communication between view model and view controller.
 protocol ProductsViewModelProtocol {
     var horizontalProducts: [ProductModel] { get }
     var verticalProducts: [ProductModel] { get }

@@ -9,11 +9,12 @@ import Foundation
 
 class NetworkManager {
 
-    // singleton instance
+    // Singleton instance
     static let shared: NetworkManager = NetworkManager()
 
     private init() { }
 
+    // This function is used to make a network request.
     func request<T: Codable>(
         request: URLRequest, completion: @escaping (Result<T, NetworkError>) -> Void
     ) {
